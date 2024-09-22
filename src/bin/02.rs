@@ -58,6 +58,7 @@ fn from_input(input: &str) -> Game {
     Game { id, rounds }
 }
 
+#[derive(Debug)]
 struct Game {
     id: u8,
     rounds: Vec<Round>,
@@ -83,6 +84,7 @@ impl Game {
     }
 }
 
+#[derive(Debug)]
 struct Round {
     red: u8,
     green: u8,
