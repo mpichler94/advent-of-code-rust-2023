@@ -86,13 +86,8 @@ struct Number {
 
 impl Number {
     fn is_adjacent(&self, pos: &Symbol) -> bool {
-        if pos.y < self.y - 1 || pos.y > self.y + 1 {
-            false
-        } else if pos.x < self.x - 1 || pos.x > self.x + self.value.to_string().len() as i32 {
-            false
-        } else {
-            true
-        }
+        !(pos.y < self.y - 1 || pos.y > self.y + 1 
+            || pos.x < self.x - 1 || pos.x > self.x + self.value.to_string().len() as i32)
     }
 }
 
