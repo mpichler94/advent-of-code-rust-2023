@@ -87,7 +87,7 @@ impl Map{
         self.mappings.iter()
             .filter_map(|mapping| mapping.map(num))
             .next()
-            .unwrap_or_else(|| num)
+            .unwrap_or(num)
     }
 
     fn map_range(&self, num: &Range<u64>) -> Vec<Range<u64>> {

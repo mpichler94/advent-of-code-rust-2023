@@ -17,7 +17,7 @@ pub fn part_one(input: &str) -> Option<u32> {
 pub fn part_two(input: &str) -> Option<u32> {
     let lines = input.trim().lines();
 
-    let result = lines.map(|line| find_number(line)).sum();
+    let result = lines.map(find_number).sum();
 
     Some(result)
 }
@@ -40,14 +40,14 @@ fn find_number(text: &str) -> u32 {
     for i in 0..text.len() {
         digits.iter().for_each(|(k, v)| {
             if first_digit.is_none() {
-                if text.chars().nth(i).unwrap().is_digit(10) {
+                if text.chars().nth(i).unwrap().is_ascii_digit() {
                     first_digit = text.chars().nth(i).unwrap().to_digit(10);
                 } else if text.get(i..).unwrap().starts_with(k) {
                     first_digit = Some(*v);
                 }
             }
             if second_digit.is_none() {
-                if text.chars().nth(text.len() - i - 1).unwrap().is_digit(10) {
+                if text.chars().nth(text.len() - i - 1).unwrap().is_ascii_digit() {
                     second_digit = text.chars().nth_back(i).unwrap().to_digit(10);
                 } else if text.get((text.len() - i - 1)..).unwrap().starts_with(k) {
                     second_digit = Some(*v);

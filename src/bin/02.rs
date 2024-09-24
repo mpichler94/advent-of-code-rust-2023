@@ -6,7 +6,7 @@ pub fn part_one(input: &str) -> Option<u32> {
     let ids = input
         .trim()
         .lines()
-        .map(|line| from_input(line))
+        .map(from_input)
         .filter_map(|game| {
             if game.valid() {
                 Some(u32::from(game.id))
@@ -23,7 +23,7 @@ pub fn part_two(input: &str) -> Option<u32> {
     let games = input
         .trim()
         .lines()
-        .map(|line| from_input(line))
+        .map(from_input)
         .map(|game| game.power())
         .sum();
 

@@ -4,7 +4,7 @@ pub fn part_one(input: &str) -> Option<u32> {
     let lines: Vec<&str> = input.lines().collect();
     let times: Vec<u32> = lines[0].split_whitespace().skip(1).map(|num| num.parse().unwrap()).collect();
     let targets: Vec<u32> = lines[1].split_whitespace().skip(1).map(|num| num.parse().unwrap()).collect();
-    
+
     // let mut ways = vec![0; times.len()];
     let mut ways2 = Vec::new();
     for i in 0..times.len() {
@@ -24,14 +24,14 @@ pub fn part_one(input: &str) -> Option<u32> {
         // if greater round ways up, else round down
         let x: f32 = ((time as f32 / 2.0) + ((time as f32 / 2.0).powi(2) - target as f32).sqrt()).round();
         let y = x * (time as f32 - x);
-        let v: f32 = (((time as f32)).powi(2) - 4.0 * target as f32).sqrt();
+        let v: f32 = ((time as f32).powi(2) - 4.0 * target as f32).sqrt();
         if y as u32 > target {
             ways2.push(v.ceil() as u32)
         } else {
-            ways2.push(v.floor() as u32)
+            ways2.push((v - 0.01).floor() as u32)
         }
     }
-    
+
     let res = ways2.iter().product();
     Some(res)
 }
@@ -49,17 +49,14 @@ pub fn part_two(input: &str) -> Option<u64> {
     //     }
     // }
 
-    let mut ways2 = 0;
     let x = ((time as f64 / 2.0) + ((time as f64 / 2.0).powi(2) - target as f64).sqrt()).round();
     let y = x * (time as f64 - x);
     let v = ((time as f64).powi(2) - 4.0 * target as f64).sqrt();
     if y as u64 > target {
-        ways2 = v.ceil() as u64
+        Some(v.ceil() as u64)
     } else {
-        ways2 = v.floor() as u64
+        Some((v - 0.01).floor() as u64)
     }
-    
-    Some(ways2)
 }
 
 #[cfg(test)]
