@@ -27,7 +27,7 @@ pub fn part_two(input: &str) -> Option<u64> {
 
     let mut arrangements = 0;
     for record in records {
-        arrangements += replace(record.0, record.1, '0') as u64;
+        arrangements += replace(record.0, record.1, '0');
     }
 
     Some(arrangements)
@@ -43,43 +43,43 @@ fn replace(row: String, numbers: Vec<usize>, last_char: char) -> u64 {
         };
     }
 
-    if row.starts_with('?') {
+    if let Some(remaining_row) = row.strip_prefix('?') {
         let mut arrangements = 0;
         if numbers.first().unwrap_or(&0) > &0 {
             let mut new_numbers = numbers.clone();
             new_numbers[0] -= 1;
-            arrangements += replace(row[1..].to_string(), new_numbers, '#');
+            arrangements += replace(remaining_row.to_string(), new_numbers, '#');
         }
         if numbers.first().unwrap_or(&0) > &0 {
             if last_char == '#' {
                 return arrangements;
             }
-            arrangements += replace(row[1..].to_string(), numbers, '.');
+            arrangements += replace(remaining_row.to_string(), numbers, '.');
         } else {
             let new_numbers = numbers.clone().into_iter().skip(1).collect::<Vec<_>>();
-            arrangements += replace(row[1..].to_string(), new_numbers, '.');
+            arrangements += replace(remaining_row.to_string(), new_numbers, '.');
         }
         return arrangements;
     }
 
-    if row.starts_with('#') {
+    if let Some(remaining_row) = row.strip_prefix('#') {
         let mut new_numbers = numbers.clone();
         if numbers.is_empty() || numbers[0] == 0 {
             return 0;
         }
         new_numbers[0] -= 1;
-        return replace(row[1..].to_string(), new_numbers, '#');
+        return replace(remaining_row.to_string(), new_numbers, '#');
     }
 
-    if row.starts_with('.') {
+    if let Some(remaining_row) = row.strip_prefix('.') {
         return if numbers.first().unwrap_or(&0) > &0 {
             if last_char == '#' {
                 return 0;
             }
-            replace(row[1..].to_string(), numbers, '.')
+            replace(remaining_row.to_string(), numbers, '.')
         } else {
             let new_numbers = numbers.clone().into_iter().skip(1).collect::<Vec<_>>();
-            replace(row[1..].to_string(), new_numbers, '.')
+            replace(remaining_row.to_string(), new_numbers, '.')
         };
     }
 
